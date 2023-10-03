@@ -1,4 +1,6 @@
 const fs = require("fs");
+const path = require("path");
+
 const {Interface, AbiCoder} = require("ethers");
 
 const swapCodes = {
@@ -13,7 +15,7 @@ const v2VersionDictionary = {
     "swapETHForExactTokens": ["V3_SWAP_EXACT_OUT", "V2_SWAP_EXACT_OUT"]
 }
 
-let universalABI = JSON.parse(fs.readFileSync('UNISWAP_UNIVERSAL_ABI.json', 'utf-8'));
+let universalABI = JSON.parse(fs.readFileSync(path.resolve(__dirname,'./UniversalRouter.json'), 'utf-8'));
 let universalInteface = new Interface(universalABI);
 
 module.exports = {
@@ -68,7 +70,9 @@ function decodeExecute(transactionInput) {
     const parsedTx = universalInteface.parseTransaction({data: transactionInput});
 
     let commandsSplit = parsedTx.args[0].substring(2).match(/.{1,2}/g);
-
+    console.log("arg0:",parsedTx.args[0]);
+     console.log("arg1:",parsedTx.args[1]);
+	 console.log("arg3:",parsedTx.args[2]);
     const abiCoder = new AbiCoder();
 
     let foundFunction;
