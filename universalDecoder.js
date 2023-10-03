@@ -15,14 +15,35 @@ const v2VersionDictionary = {
     "swapETHForExactTokens": ["V3_SWAP_EXACT_OUT", "V2_SWAP_EXACT_OUT"]
 }
 
-let universalABI = JSON.parse(fs.readFileSync(path.resolve(__dirname,'./UniversalRouter.json'), 'utf-8'));
+let universalABI = JSON.parse(fs.readFileSync(path.resolve(__dirname,'./UniversalRouterAbi.json'), 'utf-8'));
 let universalInteface = new Interface(universalABI);
 
 module.exports = {
     decodeExecute: decodeExecute,
     extractPathFromV3: extractPathFromV3,
-    buildTransactionObject: buildTransactionObject
+    buildTransactionObject: buildTransactionObject,
+    getCommands: getCommands
 }
+
+
+function getCommands () {
+
+   return "0x010203"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function buildTransactionObject(transactionDetails, decodedFunction) {
     let methodName;
@@ -65,6 +86,11 @@ function buildTransactionObject(transactionDetails, decodedFunction) {
         'gasPrice': transactionDetails.gasPriceGwei
     }
 }
+
+
+
+
+
 
 function decodeExecute(transactionInput) {
     const parsedTx = universalInteface.parseTransaction({data: transactionInput});

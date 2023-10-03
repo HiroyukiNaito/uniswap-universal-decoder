@@ -1,8 +1,22 @@
 const chai = require('chai');
 const expect = chai.expect;
 const fs = require("fs");
-const {decodeExecute} = require("../universalDecoder");
+const {getCommands, decodeExecute} = require("../universalDecoder");
 
+
+
+// Command Test
+describe('Getting UniversalRouter commands', () => {
+    it('should get commmand sequential data', () => {
+	let commandString = getCommands();
+        expect(commandString).to.include("0x");
+    });
+});
+
+
+
+
+// Real Transaction Data Test
 describe('Transaction processing', () => {
     it('should correctly identify and decode a V2 swap exact in transaction from execute', () => {
         const testFile = JSON.parse(fs.readFileSync('tests/V2_SWAP_EXACT_IN_EXECUTE.json', 'utf-8'));
