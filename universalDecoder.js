@@ -1,90 +1,113 @@
 const fs = require("fs");
 const path = require("path");
-
 const {Interface, AbiCoder} = require("ethers");
 
-const swapCodes = {
-    "00": "V3_SWAP_EXACT_IN",
-    "01": "V3_SWAP_EXACT_OUT",
-    "08": "V2_SWAP_EXACT_IN",
-    "09": "V2_SWAP_EXACT_OUT"
+// Setting Universal Router ABI
+const universalABI = JSON.parse(fs.readFileSync(path.resolve(__dirname,'./UniversalRouterAbi.json'), 'utf-8'));
+const universalInteface = new Interface(universalABI);
+const abiCoder = new AbiCoder();
+
+// Getting Uniswap commands
+const uniswapCommands = txdata => universalInteface.parseTransaction({data: txdata}).args[0];
+
+// Getting Uniswap command array
+const uniswapCommandArray = txdata => uniswapCommands(txdata).replace("0x","").match(/.{1,2}/g);
+
+// Getting Uniswap InputArray
+const uniswapInputArray = txdata => universalInteface.parseTransaction({data: txdata}).args[1];
+
+// Uniswap Router command dictionary
+// https://docs.uniswap.org/contracts/universal-router/technical-reference
+const commandDictionary = {
+    "00": ["V3_SWAP_EXACT_IN",["address", "uint256", "uint256", "bytes", "bool"]],
+    "01": ["V3_SWAP_EXACT_OUT",["address", "uint256", "uint256", "bytes", "bool"]],
+    "02": ["PERMIT2_TRANSFER_FROM",["address", "address", "uint256"]],
+    "03": ["PERMIT2_PERMIT_BATCH",["bytes", "bytes"]],
+    "04": ["SWEEP",["address", "address", "uint256"]],
+    "05": ["TRANSFER",["address", "address", "uint256"]],
+    "06": ["PAY_PORTION",["address", "address", "uint256"]],
+    "07": [],
+    "08": ["V2_SWAP_EXACT_IN",["address", "uint256", "uint256", "address[]", "bool"]],
+    "09": ["V2_SWAP_EXACT_OUT",["address", "uint256", "uint256", "address[]", "bool"]],
+    "0a": ["PERMIT2_PERMIT",["bytes", "bytes"]],
+    "0b": ["WRAP_ETH",["address", "uint256"]],
+    "0c": ["VUNWRAP_WETH",["address", "uint256"]],
+    "0d": ["PERMIT2_TRANSFER_FROM_BATCH",["bytes[]"]],
+    "0e": [],
+    "0f": [],
+    "10": ["SEAPORT",["uint256", "bytes"]],
+    "11": ["LOOKS_RARE_721",["uint256","bytes","address","address", "uint256"]],
+    "12": ["NFTX",["uint256","bytes"]],
+    "13": ["CRYPTOPUNKS",["uint256","address","uint256"]],
+    "14": ["LOOKS_RARE_1155",["uint256","bytes","address","address", "uint256","uint256"]],
+    "15": ["OWNER_CHECK_721",["address","address", "uint256","uint256"]],
+    "16": ["OWNER_CHECK_1155",["address","address", "uint256","uint256"]],
+    "17": ["SWEEP_ERC721",["address","address", "uint256"]],
+    "18": ["X2Y2_721",["uint256","bytes","address","address","uint256"]],
+    "19": ["SUDOSWAP",["uint256","bytes"]],
+    "1a": ["NFT20",["uint256","bytes"]],
+    "1b": ["X2Y2_1155",["uint256","bytes","address","address","uint256","uint256"]],
+    "1c": ["FOUNDATION",["uint256","bytes","address","address","uint256"]],
+    "1d": ["SWEEP_ERC1155",["address","address", "uint256","uint256"]],
+    "1e": [],
+    "1f": [],
 };
 
-const v2VersionDictionary = {
-    "swapExactETHForTokens": ["V3_SWAP_EXACT_IN", "V2_SWAP_EXACT_IN"],
-    "swapETHForExactTokens": ["V3_SWAP_EXACT_OUT", "V2_SWAP_EXACT_OUT"]
-}
+// Getting Uniswap Decoded Input
+const uniswapDecodedInputArray = txdata => 
+      uniswapCommandArray(txdata).map((curr, i) => 
+      (abiCoder.decode(commandDictionary[curr][1], uniswapInputArray(txdata)[i])));
 
-let universalABI = JSON.parse(fs.readFileSync(path.resolve(__dirname,'./UniversalRouterAbi.json'), 'utf-8'));
-let universalInteface = new Interface(universalABI);
+
+// Getting Uniswap deadline
+const uniswapDeadline = txdata => (universalInteface.parseTransaction({data: txdata}).args.length == 3) 
+                                     ? universalInteface.parseTransaction({data: txdata}).args[2]
+                                     : null;
+
+// Getting Uniswap V3 Path Decoded Input
+// Ex. ["address","poolFee","address"]
+// https://docs.uniswap.org/contracts/v3/guides/swaps/multihop-swaps
+const uniswapV3DecodedInputArray = txdata => 
+      uniswapCommandArray(txdata)
+       .map((curr, i) => 
+         ((curr === "01" || curr === "00") // pick V3 for path format
+         ?  uniswapDecodedInputArray(txdata)[i]
+             .map((curr2, n) => ((n == 3)
+                ?  curr2.replace("0x","")
+                        .match(/.{1,46}/g)
+                        .map(i=>i.match(/.{1,40}/g))
+                        .flat(1)
+                        .map((curr3) => 
+                            ((curr3.length == 40)  
+                            ? "0x" + curr3.toUpperCase() 
+                            : BigInt(parseInt("0x" + curr3 ))
+                         )) 
+                : curr2
+         )) 
+         : uniswapDecodedInputArray(txdata)[i]
+      ));
+
+// Getting Full Output of Translated Data
+const uniswapFullDecodedInput = (txdata) => (
+{
+    "contents" : uniswapCommandArray(txdata).map((curr, i) => 
+                  [{ "command" : curr,
+                     "value" : commandDictionary[curr][0] ,
+                     "inputType" :  commandDictionary[curr][1],
+                     "decodedInput" : uniswapV3DecodedInputArray(txdata)[i]
+                 }]),
+    "deadline": uniswapDeadline(txdata),
+});
+
 
 module.exports = {
-    decodeExecute: decodeExecute,
-    extractPathFromV3: extractPathFromV3,
-    buildTransactionObject: buildTransactionObject,
-    getCommands: getCommands
-}
-
-
-function getCommands () {
-
-   return "0x010203"
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function buildTransactionObject(transactionDetails, decodedFunction) {
-    let methodName;
-    if (v2VersionDictionary["swapExactETHForTokens"].includes(decodedFunction.function)) {
-        methodName = "swapExactETHForTokens";
-    } else if (v2VersionDictionary["swapETHForExactTokens"].includes(decodedFunction.function)) {
-        methodName = "swapETHForExactTokens";
-    }
-
-    let contractCall = {
-        "methodName": methodName,
-        "params": {
-            "amountIn": decodedFunction.amountIn,
-            "amountOut": decodedFunction.amountOut,
-            "path": decodedFunction.path,
-            "deadline": "99999999999"
-        }
-    }
-
-
-    if (methodName === undefined) {
-        return undefined;
-    }
-
-    return {
-        'status': transactionDetails.status,
-        'direction': transactionDetails.direction,
-        'hash': transactionDetails.hash,
-        'value': transactionDetails.value,
-        'contractCall': JSON.stringify(contractCall),
-        'counterparty': transactionDetails.counterparty,
-        'estimatedBlocksUntilConfirmed': transactionDetails.estimatedBlocksUntilConfirmed,
-        'dispatchTimestamp': transactionDetails.dispatchTimestamp,
-        'maxFeePerGas': transactionDetails.maxFeePerGas,
-        'maxPriorityFeePerGas': transactionDetails.maxPriorityFeePerGas,
-        'gas': transactionDetails.gas,
-        'from': transactionDetails.from,
-        'type': transactionDetails.type,
-        'gasPriceGwei': transactionDetails.gasPriceGwei,
-        'gasPrice': transactionDetails.gasPriceGwei
-    }
+    uniswapCommands: uniswapCommands,
+    uniswapCommandArray: uniswapCommandArray,
+    uniswapInputArray: uniswapInputArray,
+    uniswapDecodedInputArray: uniswapDecodedInputArray,
+    uniswapV3DecodedInputArray: uniswapV3DecodedInputArray,
+    uniswapDeadline: uniswapDeadline,
+    uniswapFullDecodedInput: uniswapFullDecodedInput
 }
 
 
@@ -92,89 +115,5 @@ function buildTransactionObject(transactionDetails, decodedFunction) {
 
 
 
-function decodeExecute(transactionInput) {
-    const parsedTx = universalInteface.parseTransaction({data: transactionInput});
 
-    let commandsSplit = parsedTx.args[0].substring(2).match(/.{1,2}/g);
-    console.log("arg0:",parsedTx.args[0]);
-     console.log("arg1:",parsedTx.args[1]);
-	 console.log("arg3:",parsedTx.args[2]);
-    const abiCoder = new AbiCoder();
 
-    let foundFunction;
-    let inputForFunction;
-    commandsSplit.forEach(
-        commandCode => {
-            const currentIndex = Object.keys(swapCodes).indexOf(commandCode)
-            if (currentIndex !== -1) {
-                foundFunction = commandCode;
-                inputForFunction = parsedTx.args[1][commandsSplit.indexOf(commandCode)];
-            }
-        }
-    )
-
-    let decoded;
-    switch (swapCodes[foundFunction]) {
-        case "V3_SWAP_EXACT_IN": //"exactInput" FNC 11
-            decoded = abiCoder.decode(["address", "uint256", "uint256", "bytes", "bool"], inputForFunction);
-            return {
-                function: swapCodes[foundFunction],
-                recipient: decoded[0],
-                amountIn: decoded[1].toString(),
-                amountOut: decoded[2].toString(),
-                path: extractPathFromV3(decoded[3]),
-                payerIsUser: decoded[4]
-            }
-        case "V3_SWAP_EXACT_OUT": //exactOutputSingle FNC 9
-            decoded = abiCoder.decode(["address", "uint256", "uint256", "bytes", "bool"], inputForFunction);
-            return {
-                function: swapCodes[foundFunction],
-                recipient: decoded[0],
-                amountIn: decoded[2].toString(),
-                amountOut: decoded[1].toString(),
-                path: extractPathFromV3(decoded[3], true), // because exact output swaps are executed in reverse order, in this case tokenOut is actually tokenIn
-                payerIsUser: decoded[4]
-            }
-        case "V2_SWAP_EXACT_IN":
-            decoded = abiCoder.decode(["address", "uint256", "uint256", "address[]", "bool"], inputForFunction);
-            return {
-                function: swapCodes[foundFunction],
-                recipient: decoded[0],
-                amountIn: decoded[1].toString(),
-                amountOut: decoded[2].toString(),
-                path: decoded[3],
-                payerIsUser: decoded[4]
-            }
-        case "V2_SWAP_EXACT_OUT":
-            decoded = abiCoder.decode(["address", "uint256", "uint256", "address[]", "bool"], inputForFunction);
-            return {
-                function: swapCodes[foundFunction],
-                recipient: decoded[0],
-                amountIn: decoded[2].toString(),
-                amountOut: decoded[1].toString(),
-                path: decoded[3],
-                payerIsUser: decoded[4]
-            }
-        default:
-            console.info("No parseable execute function found in input.")
-            return undefined;
-    }
-}
-
-function extractPathFromV3(fullPath, reverse = false) {
-    const fullPathWithoutHexSymbol = fullPath.substring(2);
-    let path = [];
-    let currentAddress = "";
-    for (let i = 0; i < fullPathWithoutHexSymbol.length; i++) {
-        currentAddress += fullPathWithoutHexSymbol[i];
-        if (currentAddress.length === 40) {
-            path.push('0x' + currentAddress);
-            i = i + 6;
-            currentAddress = "";
-        }
-    }
-    if (reverse) {
-        return path.reverse();
-    }
-    return path;
-}

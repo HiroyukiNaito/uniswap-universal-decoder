@@ -1,5 +1,1 @@
-{ 
-"scripts": {
-    "test": "mocha ./**/*.js"
-  }
-}
+{"scripts":{"test":"mocha ./**/*.js"},"dependencies":{"rewire":"^7.0.0"}}
