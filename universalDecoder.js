@@ -29,7 +29,7 @@ const commandDictionary = {
     "07": [],
     "08": ["V2_SWAP_EXACT_IN",["address", "uint256", "uint256", "address[]", "bool"]],
     "09": ["V2_SWAP_EXACT_OUT",["address", "uint256", "uint256", "address[]", "bool"]],
-    "0a": ["PERMIT2_PERMIT",["bytes", "bytes"]],
+    "0a": ["PERMIT2_PERMIT",["tuple((address,uint160,uint48,uint48),address,uint256)","bytes"]],
     "0b": ["WRAP_ETH",["address", "uint256"]],
     "0c": ["VUNWRAP_WETH",["address", "uint256"]],
     "0d": ["PERMIT2_TRANSFER_FROM_BATCH",["bytes[]"]],
