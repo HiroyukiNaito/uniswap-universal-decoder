@@ -32,7 +32,7 @@ const commandDictionary = {
     "0a": ["PERMIT2_PERMIT",["tuple((address,uint160,uint48,uint48),address,uint256)","bytes"]],
     "0b": ["WRAP_ETH",["address", "uint256"]],
     "0c": ["VUNWRAP_WETH",["address", "uint256"]],
-    "0d": ["PERMIT2_TRANSFER_FROM_BATCH",["bytes[]"]],
+    "0d": ["PERMIT2_TRANSFER_FROM_BATCH",["tuple(address, address, uint160, address)[]"]],
     "0e": [],
     "0f": [],
     "10": ["SEAPORT",["uint256", "bytes"]],
