@@ -1,6 +1,6 @@
 ## Uniswap universal execute decoder
- Decodes Uniswap Universal execute function to their legacy V2 and V3 counterparts.
-
+Decodes Uniswap Universal execute function in accordance with [the Uniswap tehchnical reference](https://docs.uniswap.org/contracts/universal-router/technical-reference#command-inputs) in which translate binary into array.
+ 
 ### Used libraries
 
 - chai
@@ -16,19 +16,19 @@
 
 | command | value | Decode | Tested
 | ---------- | ------------- |:------:|:------:
-| 0x00 | V3_SWAP_EXACT_IN | ✅ | 
-| 0x01 | V3_SWAP_EXACT_OUT | ✅ | 
+| 0x00 | V3_SWAP_EXACT_IN | ✅ |  ✅
+| 0x01 | V3_SWAP_EXACT_OUT | ✅ |  ✅
 | 0x02 | PERMIT2_TRANSFER_FROM | ✅ | 
 | 0x03 | PERMIT2_PERMIT_BATCH | ✅ | 
 | 0x04 | SWEEP | ✅ | 
 | 0x05 | TRANSFER | ✅ | 
 | 0x06 | PAY_PORTION | ✅ | 
 | 0x07 | N/A | N/A | N/A
-| 0x08 | V3_SWAP_EXACT_IN | ✅ | 
-| 0x09 | V3_SWAP_EXACT_OUT | ✅ | 
-| 0x0a | PERMIT2_PERMIT | ✅ | 
-| 0x0b | WRAP_ETH | ✅ | 
-| 0x0c | VUNWRAP_WETH | ✅ | 
+| 0x08 | V2_SWAP_EXACT_IN | ✅ |  ✅
+| 0x09 | V2_SWAP_EXACT_OUT | ✅ |  ✅
+| 0x0a | PERMIT2_PERMIT | ✅ |  ✅
+| 0x0b | WRAP_ETH | ✅ |  ✅
+| 0x0c | UNWRAP_WETH | ✅ |   ✅
 | 0x0d | PERMIT2_TRANSFER_FROM_BATCH | ✅ | 
 | 0x0e | N/A | N/A | N/A
 | 0x0f | N/A | N/A | N/A
@@ -39,7 +39,7 @@
 | 0x14 | LOOKS_RARE_1155 | ✅ | 
 | 0x15 | OWNER_CHECK_721 | ✅ | 
 | 0x16 | OWNER_CHECK_1155 | ✅ | 
-| 0x17 | V2_SWAP_EXACT_OUT | ✅ | 
+| 0x17 | SWEEP_ERC721| ✅ | 
 | 0x18 | X2Y2_721 | ✅ | 
 | 0x19 | SUDOSWAP | ✅ | 
 | 0x1a | NFT20 | ✅ | 
@@ -174,6 +174,9 @@ util.inspect(uniswapFullDecodedInput(txdata), false, null, true)
 );
 ```
 - Expected Result Example
+
+Please see [the reference](https://docs.uniswap.org/contracts/universal-router/technical-reference#command-inputs) of each array meanings
+  
 ```javascript
 {
         contents: [
@@ -218,5 +221,55 @@ util.inspect(uniswapFullDecodedInput(txdata), false, null, true)
         deadline: 1674344111n
 }
 ```
+
+####  Example program
+
+1. Change `YOUR_NODE_RPC_WEBSOCKET_URL` in example.js to your WSS PRC endpoint
+(Ex. `ws://localhost:8546` )
+
+```Javascript
+const ethers = require("ethers");
+const util = require("util");
+const {
+  uniswapCommands,
+  uniswapCommandArray,
+  uniswapInputArray,
+  uniswapDecodedInputArray,
+  uniswapV3DecodedInputArray,
+  uniswapDeadline,
+  uniswapFullDecodedInput,
+} = require("./universalDecoder");
+
+const wssUrl = "YOUR_RPC_WEBSOCKET_URL";
+
+//Universal Router Contract Address
+const router = "0x3fC91A3afd70395Cd496C647d5a6CC9D4B2b7FAD";
+
+async function main() {
+    const provider = new ethers.WebSocketProvider(wssUrl);
+    provider.on('pending', async (tx) => {
+        const txnData = await provider.getTransaction(tx);
+        if (txnData) {
+            if (txnData.to == router && txnData['data'].includes("0x3593564c")) { // 0x3593564c => execute method
+                console.log("uniswapCommands: ", util.inspect(uniswapCommands(txnData['data']), false, null, true ));
+                console.log("uniswapCommandArray: ", util.inspect(uniswapCommandArray(txnData['data']), false, null, true ));
+                console.log("uniswapInputArray: ", util.inspect(uniswapInputArray(txnData['data']), false, null, true));
+                console.log("uniswapDecodedInputArray: ", util.inspect(uniswapDecodedInputArray(txnData['data']), false, null, true ));
+                console.log("uniswapV3DecodedInputArray: ", util.inspect(uniswapV3DecodedInputArray(txnData['data']), false, null, true ));
+                console.log("uniswapDeadline: ", util.inspect(uniswapDeadline(txnData['data']), false, null, true ));
+                console.log("uniswapFullDecodedInput: ", util.inspect(uniswapFullDecodedInput(txnData['data']), false, null, true));
+            }
+        }
+    })
+}
+main();
+```
+
+2. Run the program
+
+```bash
+$ node example.js
+```
+
 
 
