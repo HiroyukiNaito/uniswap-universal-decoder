@@ -1,6 +1,5 @@
 ## Uniswap universal execute decoder
- Decodes Uniswap Universal execute function to their legacy V2 and V3 counterparts.
-
+ Decodes Uniswap Universal execute function
 ### Used libraries
 
 - chai
