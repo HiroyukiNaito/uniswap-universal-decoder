@@ -7,7 +7,8 @@
 - ethers
 - mocha
 - fs
-- path 
+- path
+- util
 
 ### Decoded functions
 
