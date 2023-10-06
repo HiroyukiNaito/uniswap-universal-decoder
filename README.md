@@ -49,3 +49,41 @@
 | 0x1f | N/A  | N/A | N/A
 
 ---
+
+### Usage
+
+#### Importing module
+```javascript
+const {
+  uniswapCommands,
+  uniswapCommandArray,
+  uniswapInputArray,
+  uniswapDecodedInputArray,
+  uniswapV3DecodedInputArray,
+  uniswapDeadline,
+  uniswapFullDecodedInput,
+} = require("./universalDecoder");
+```
+
+####  uniswapCommands function
+Obtain Uniswap Uiversal Router Commands as an String
+
+####  uniswapCommandArray function
+Obtain Uniswap Uiversal Router Commands as an Array
+
+####  uniswapInputArray function
+Obtain Uniswap Uiversal Router Input Array as an Binary
+
+####  uniswapDecodedInputArray function
+Obtain Uniswap Uiversal Router Input Decoded Array
+
+####  uniswapV3DecodedInputArray function
+Obtain Uniswap Uiversal Router Input Decoded Array and Decoded [Uniswap V3 Path](https://docs.uniswap.org/contracts/v3/reference/periphery/libraries/Path) 
+
+####  uniswapDeadline function
+Obtain Uniswap Uiversal Router Deadline
+
+####  uniswapFullDecodedInput function
+Obtain Uniswap Uiversal Router Fullout with above functions as a Dictionary
+
+
