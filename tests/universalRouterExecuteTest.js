@@ -1,4 +1,3 @@
-const rewire = require("rewire");
 const chai = require("chai");
 const util = require("util");
 const expect = chai.expect;
@@ -12,7 +11,6 @@ const {
   uniswapDeadline,
   uniswapFullDecodedInput,
 } = require("../universalDecoder");
-const universalDecoder = rewire("../universalDecoder");
 
 // Uniswap Command Test
 describe("Getting Commands", () => {
