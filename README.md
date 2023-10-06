@@ -68,22 +68,148 @@ const {
 ####  uniswapCommands function
 Obtain Uniswap Uiversal Router Commands as an String
 
+- Call function
+```javascript
+console.log(uniswapCommands(txdata));
+```
+- Expected Result Example
+```javascript
+"0x0b08"
+```
+
 ####  uniswapCommandArray function
 Obtain Uniswap Uiversal Router Commands as an Array
+
+- Call function
+```javascript
+console.log(uniswapCommandArray(txdata));
+```
+- Expected Result Example
+```javascript
+["0b", "08"]
+```
 
 ####  uniswapInputArray function
 Obtain Uniswap Uiversal Router Input Array as an Binary
 
+- Call function
+```javascript
+console.log(uniswapInputArray(txdata));
+```
+- Expected Result Example
+```javascript
+[
+"0x0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000001aa535d3d0c000",
+"0x0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000001aa535d3d0c00000000000000000000000000000000000000000000030b3ead9ce807fab959dd700000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc200000000000000000000000002e7f808990638e9e67e1f00313037ede2362361",
+]
+```
+
 ####  uniswapDecodedInputArray function
 Obtain Uniswap Uiversal Router Input Decoded Array
+
+```javascript
+console.log(uniswapDecodedInputArray(txdata));
+```
+- Expected Result Example
+```javascript
+[
+      "0x0000000000000000000000000000000000000001",
+      7500000000000000n,
+      58878075174672152174894551n,
+      [
+        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "0x02e7F808990638E9e67E1f00313037EDe2362361",
+      ],
+      false,
+]
+```
 
 ####  uniswapV3DecodedInputArray function
 Obtain Uniswap Uiversal Router Input Decoded Array and Decoded [Uniswap V3 Path](https://docs.uniswap.org/contracts/v3/reference/periphery/libraries/Path) 
 
+```javascript
+console.log(uniswapV3DecodedInputArray(txdata));
+```
+- Expected Result Example
+```javascript
+[
+      ["0x0000000000000000000000000000000000000002", 34564726617685178n],
+      [
+        "0x0000000000000000000000000000000000000001",
+        10000000000000000000n,
+        34564726617685178n,
+        [
+          "0x4D224452801ACED8B2F0AEBE155379BB5D594381",  <=== Uniswap Path Address
+          3000n, <=== Pool Fee
+          "0xC02AAA39B223FE8D0A0E5C4F27EAD9083C756CC2",  <=== Pool Address
+        ],
+        false,
+      ],
+      ["0x0000000000000000000000000000000000000001", 0n],
+]
+```
+
 ####  uniswapDeadline function
 Obtain Uniswap Uiversal Router Deadline
+```javascript
+console.log(uniswapDeadline(txdata));
+```
+- Expected Result Example
+```javascript
+1674344111n
+```
 
 ####  uniswapFullDecodedInput function
 Obtain Uniswap Uiversal Router Fullout with above functions as a Dictionary
+```javascript
+console.log(
+util.inspect(uniswapFullDecodedInput(txdata), false, null, true)
+);
+```
+- Expected Result Example
+```javascript
+{
+        contents: [
+          [
+            {
+              command: '0b',
+              value: 'WRAP_ETH',
+              inputType: [ 'address', 'uint256' ],
+              decodedInput: [
+                '0x0000000000000000000000000000000000000002',
+                34564726617685178n
+              ]
+            }
+          ],
+          [
+            {
+              command: '01',
+              value: 'V3_SWAP_EXACT_OUT',
+              inputType: [ 'address', 'uint256', 'uint256', 'bytes', 'bool' ],
+              decodedInput: [
+                '0x0000000000000000000000000000000000000001',
+                10000000000000000000n,
+                34564726617685178n,
+                [
+                  '0x4D224452801ACED8B2F0AEBE155379BB5D594381',
+                  3000n,
+                  '0xC02AAA39B223FE8D0A0E5C4F27EAD9083C756CC2'
+                ],
+                false
+              ]
+            }
+          ],
+          [
+            {
+              command: '0c',
+              value: 'VUNWRAP_WETH',
+              inputType: [ 'address', 'uint256' ],
+              decodedInput:  [ '0x0000000000000000000000000000000000000001', 0n ]
+            }
+          ]
+        ],
+        deadline: 1674344111n
+}
+```
 
 
