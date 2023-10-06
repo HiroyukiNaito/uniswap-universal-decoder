@@ -262,7 +262,7 @@ async function main() {
 main();
 ```
 
-1. Run the program
+2. Run the program
 
 ```bash
 $ node example.js
