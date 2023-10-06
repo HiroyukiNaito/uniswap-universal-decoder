@@ -1,5 +1,7 @@
 ## Uniswap universal execute decoder
- Decodes Uniswap Universal execute function
+Decodes Uniswap Universal execute function.
+In accordance with [the Uniswap tehchnical reference](https://docs.uniswap.org/contracts/universal-router/technical-reference#command-inputs), the program translate binary into array.
+ 
 ### Used libraries
 
 - chai
@@ -173,6 +175,9 @@ util.inspect(uniswapFullDecodedInput(txdata), false, null, true)
 );
 ```
 - Expected Result Example
+
+Please see [the reference](https://docs.uniswap.org/contracts/universal-router/technical-reference#command-inputs) of each array meanings
+  
 ```javascript
 {
         contents: [
