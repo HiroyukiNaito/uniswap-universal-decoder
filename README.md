@@ -20,7 +20,7 @@
 | 0x03 | PERMIT2_PERMIT_BATCH | ✅ | 
 | 0x04 | SWEEP | ✅ | 
 | 0x05 | TRANSFER | ✅ | 
-| 0x06 | PAY_PORTION | ✅ | ✅
+| 0x06 | PAY_PORTION | ✅ | 
 | 0x07 | N/A | N/A | N/A
 | 0x08 | V3_SWAP_EXACT_IN | ✅ | 
 | 0x09 | V3_SWAP_EXACT_OUT | ✅ | 
