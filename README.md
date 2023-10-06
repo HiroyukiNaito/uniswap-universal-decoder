@@ -107,6 +107,7 @@ console.log(uniswapInputArray(txdata));
 ####  uniswapDecodedInputArray function
 Obtain Uniswap Uiversal Router Input Decoded Array
 
+- Call function
 ```javascript
 console.log(uniswapDecodedInputArray(txdata));
 ```
@@ -127,6 +128,7 @@ console.log(uniswapDecodedInputArray(txdata));
 ####  uniswapV3DecodedInputArray function
 Obtain Uniswap Uiversal Router Input Decoded Array and Decoded [Uniswap V3 Path](https://docs.uniswap.org/contracts/v3/reference/periphery/libraries/Path) 
 
+- Call function
 ```javascript
 console.log(uniswapV3DecodedInputArray(txdata));
 ```
@@ -151,6 +153,8 @@ console.log(uniswapV3DecodedInputArray(txdata));
 
 ####  uniswapDeadline function
 Obtain Uniswap Uiversal Router Deadline
+
+- Call function
 ```javascript
 console.log(uniswapDeadline(txdata));
 ```
@@ -161,6 +165,8 @@ console.log(uniswapDeadline(txdata));
 
 ####  uniswapFullDecodedInput function
 Obtain Uniswap Uiversal Router Fullout with above functions as a Dictionary
+
+- Call function
 ```javascript
 console.log(
 util.inspect(uniswapFullDecodedInput(txdata), false, null, true)
