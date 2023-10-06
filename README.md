@@ -1,5 +1,5 @@
 ## Uniswap universal execute decoder
-Decodes Uniswap Universal execute function in accordance with [the Uniswap tehchnical reference](https://docs.uniswap.org/contracts/universal-router/technical-reference#command-inputs) which translate binary into array.
+Decodes Uniswap Universal execute function in accordance with [the Uniswap tehchnical reference](https://docs.uniswap.org/contracts/universal-router/technical-reference#command-inputs) in which translate binary into array.
  
 ### Used libraries
 
