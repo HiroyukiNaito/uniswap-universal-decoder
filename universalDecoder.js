@@ -88,7 +88,7 @@ const uniswapV3DecodedInputArray = txdata =>
       ));
 
 // Getting Full Output of Translated Data
-const uniswapFullDecodedInput = (txdata) => (
+const uniswapFullDecodedInput = txdata => (
 {
     "contents" : uniswapCommandArray(txdata).map((curr, i) => 
                   [{ "command" : curr,
@@ -99,7 +99,7 @@ const uniswapFullDecodedInput = (txdata) => (
     "deadline": uniswapDeadline(txdata),
 });
 
-
+// Exporting functions
 module.exports = {
     uniswapCommands: uniswapCommands,
     uniswapCommandArray: uniswapCommandArray,
