@@ -246,7 +246,7 @@ const wssUrl = "YOUR_RPC_WEBSOCKET_URL";
 const router = "0x3fC91A3afd70395Cd496C647d5a6CC9D4B2b7FAD";
 const compose = (...fns) => arg => fns.reduce((composed, f) => f(composed),arg);
 
-async function main() {
+const main = async () => {
     const provider = new ethers.WebSocketProvider(wssUrl);
     provider.on('pending', async (tx) => {
         const txnData = await provider.getTransaction(tx);
