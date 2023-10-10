@@ -1,20 +1,28 @@
+"use strict";
 const fs = require("fs");
 const path = require("path");
-const {Interface, AbiCoder} = require("ethers");
+const { Interface, AbiCoder } = require("ethers");
 
 // Setting Universal Router ABI
-const universalABI = JSON.parse(fs.readFileSync(path.resolve(__dirname,'./UniversalRouterAbi.json'), 'utf-8'));
+const universalABI = JSON.parse(
+  fs.readFileSync(path.resolve(__dirname, "./UniversalRouterAbi.json"), "utf-8")
+);
 const universalInteface = new Interface(universalABI);
 const abiCoder = new AbiCoder();
 
 // Getting Uniswap commands
-const uniswapCommands = txdata => universalInteface.parseTransaction({data: txdata}).args[0];
+const uniswapCommands = (txdata) =>
+  universalInteface.parseTransaction({ data: txdata }).args[0];
 
 // Getting Uniswap command array
-const uniswapCommandArray = txdata => uniswapCommands(txdata).replace("0x","").match(/.{1,2}/g);
+const uniswapCommandArray = (txdata) =>
+  uniswapCommands(txdata)
+    .replace("0x", "")
+    .match(/.{1,2}/g);
 
 // Getting Uniswap InputArray
-const uniswapInputArray = txdata => universalInteface.parseTransaction({data: txdata}).args[1];
+const uniswapInputArray = (txdata) =>
+  universalInteface.parseTransaction({ data: txdata }).args[1];
 
 // Uniswap Router command dictionary
 // https://docs.uniswap.org/contracts/universal-router/technical-reference
@@ -54,66 +62,60 @@ const commandDictionary = {
 };
 
 // Getting Uniswap Decoded Input
-const uniswapDecodedInputArray = txdata => 
-      uniswapCommandArray(txdata).map((curr, i) => 
-      (abiCoder.decode(commandDictionary[curr][1], uniswapInputArray(txdata)[i])));
-
+const uniswapDecodedInputArray = (txdata) =>
+  uniswapCommandArray(txdata).map((curr, i) =>
+    abiCoder.decode(commandDictionary[curr][1], uniswapInputArray(txdata)[i])
+  );
 
 // Getting Uniswap deadline
-const uniswapDeadline = txdata => (universalInteface.parseTransaction({data: txdata}).args.length == 3) 
-                                     ? universalInteface.parseTransaction({data: txdata}).args[2]
-                                     : null;
+const uniswapDeadline = (txdata) =>
+  universalInteface.parseTransaction({ data: txdata }).args.length == 3
+    ? universalInteface.parseTransaction({ data: txdata }).args[2]
+    : null;
 
 // Getting Uniswap V3 Path Decoded Input
 // Ex. ["address","poolFee","address"]
 // https://docs.uniswap.org/contracts/v3/guides/swaps/multihop-swaps
-const uniswapV3DecodedInputArray = txdata => 
-      uniswapCommandArray(txdata)
-       .map((curr, i) => 
-         ((curr === "01" || curr === "00") // pick V3 for path format
-         ?  uniswapDecodedInputArray(txdata)[i]
-             .map((curr2, n) => ((n == 3)
-                ?  curr2.replace("0x","")
-                        .match(/.{1,46}/g)
-                        .map(i=>i.match(/.{1,40}/g))
-                        .flat(1)
-                        .map((curr3) => 
-                            ((curr3.length == 40)  
-                            ? "0x" + curr3.toUpperCase() 
-                            : BigInt(parseInt("0x" + curr3 ))
-                         )) 
-                : curr2
-         )) 
-         : uniswapDecodedInputArray(txdata)[i]
-      ));
+const uniswapV3DecodedInputArray = (txdata) =>
+  uniswapCommandArray(txdata).map((curr, i) =>
+    curr === "01" || curr === "00" // pick V3 for path format
+      ? uniswapDecodedInputArray(txdata)[i].map((curr2, n) =>
+          n == 3
+            ? curr2
+                .replace("0x", "")
+                .match(/.{1,46}/g)
+                .map((i) => i.match(/.{1,40}/g))
+                .flat(1)
+                .map((curr3) =>
+                  curr3.length == 40
+                    ? "0x" + curr3.toUpperCase()
+                    : BigInt(parseInt("0x" + curr3))
+                )
+            : curr2
+        )
+      : uniswapDecodedInputArray(txdata)[i]
+  );
 
 // Getting Full Output of Translated Data
-const uniswapFullDecodedInput = txdata => (
-{
-    "contents" : uniswapCommandArray(txdata).map((curr, i) => 
-                  [{ "command" : curr,
-                     "value" : commandDictionary[curr][0] ,
-                     "inputType" :  commandDictionary[curr][1],
-                     "decodedInput" : uniswapV3DecodedInputArray(txdata)[i]
-                 }]),
-    "deadline": uniswapDeadline(txdata),
+const uniswapFullDecodedInput = (txdata) => ({
+  contents: uniswapCommandArray(txdata).map((curr, i) => [
+    {
+      command: curr,
+      value: commandDictionary[curr][0],
+      inputType: commandDictionary[curr][1],
+      decodedInput: uniswapV3DecodedInputArray(txdata)[i],
+    },
+  ]),
+  deadline: uniswapDeadline(txdata),
 });
 
 // Exporting functions
 module.exports = {
-    uniswapCommands: uniswapCommands,
-    uniswapCommandArray: uniswapCommandArray,
-    uniswapInputArray: uniswapInputArray,
-    uniswapDecodedInputArray: uniswapDecodedInputArray,
-    uniswapV3DecodedInputArray: uniswapV3DecodedInputArray,
-    uniswapDeadline: uniswapDeadline,
-    uniswapFullDecodedInput: uniswapFullDecodedInput
-}
-
-
-
-
-
-
-
-
+  uniswapCommands: uniswapCommands,
+  uniswapCommandArray: uniswapCommandArray,
+  uniswapInputArray: uniswapInputArray,
+  uniswapDecodedInputArray: uniswapDecodedInputArray,
+  uniswapV3DecodedInputArray: uniswapV3DecodedInputArray,
+  uniswapDeadline: uniswapDeadline,
+  uniswapFullDecodedInput: uniswapFullDecodedInput,
+};
