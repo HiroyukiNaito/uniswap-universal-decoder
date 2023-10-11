@@ -71,7 +71,7 @@ Obtain Uniswap Uiversal Router Commands as an String
 
 - Call function
 ```javascript
-console.log(uniswapCommands(txdata));
+console.log(uniswapCommands(txnData));
 ```
 - Expected Result Example
 ```javascript
@@ -83,7 +83,7 @@ Obtain Uniswap Uiversal Router Commands as an Array
 
 - Call function
 ```javascript
-console.log(uniswapCommandArray(txdata));
+console.log(uniswapCommandArray(txnData));
 ```
 - Expected Result Example
 ```javascript
@@ -95,7 +95,7 @@ Obtain Uniswap Uiversal Router Input Array as an Binary
 
 - Call function
 ```javascript
-console.log(uniswapInputArray(txdata));
+console.log(uniswapInputArray(txnData));
 ```
 - Expected Result Example
 ```javascript
@@ -110,7 +110,7 @@ Obtain Uniswap Uiversal Router Input Decoded Array
 
 - Call function
 ```javascript
-console.log(uniswapDecodedInputArray(txdata));
+console.log(uniswapDecodedInputArray(txnData));
 ```
 - Expected Result Example
 ```javascript
@@ -131,7 +131,7 @@ Obtain Uniswap Uiversal Router Input Decoded Array and Decoded [Uniswap V3 Path]
 
 - Call function
 ```javascript
-console.log(uniswapV3DecodedInputArray(txdata));
+console.log(uniswapV3DecodedInputArray(txnData));
 ```
 - Expected Result Example
 ```javascript
@@ -157,7 +157,7 @@ Obtain Uniswap Uiversal Router Deadline
 
 - Call function
 ```javascript
-console.log(uniswapDeadline(txdata));
+console.log(uniswapDeadline(txnData));
 ```
 - Expected Result Example
 ```javascript
@@ -170,7 +170,7 @@ Obtain Uniswap Uiversal Router Fullout with above functions as a Dictionary
 - Call function
 ```javascript
 console.log(
-util.inspect(uniswapFullDecodedInput(txdata), false, null, true)
+util.inspect(uniswapFullDecodedInput(txnData), false, null, true)
 );
 ```
 - Expected Result Example
