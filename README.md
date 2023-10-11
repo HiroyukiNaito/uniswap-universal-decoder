@@ -212,7 +212,7 @@ Please see [the reference](https://docs.uniswap.org/contracts/universal-router/t
           [
             {
               command: '0c',
-              value: 'VUNWRAP_WETH',
+              value: 'UNWRAP_WETH',
               inputType: [ 'address', 'uint256' ],
               decodedInput:  [ '0x0000000000000000000000000000000000000001', 0n ]
             }
