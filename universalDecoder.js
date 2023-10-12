@@ -76,21 +76,23 @@ const uniswapDeadline = (txnData) =>
 // Getting Uniswap V3 Path Decoded Input
 // Ex. ["address","poolFee","address"]
 // https://docs.uniswap.org/contracts/v3/guides/swaps/multihop-swaps
+
+const uniswapV3PathDecode = (hexPath) => hexPath
+                                          .replace("0x", "").match(/.{1,46}/g)
+                                          .map((i) => i.match(/.{1,40}/g))
+                                          .flat(1)
+                                          .map((curr) =>
+                                                  curr.length == 40
+                                                  ? "0x" + curr.toUpperCase()
+                                                  : BigInt(parseInt("0x" + curr))
+                                           )
+
 const uniswapV3DecodedInputArray = (txnData) =>
   uniswapCommandArray(txnData).map((curr, i) =>
     curr === "01" || curr === "00" // pick V3 for path format
       ? uniswapDecodedInputArray(txnData)[i].map((curr2, n) =>
           n == 3
-            ? curr2
-                .replace("0x", "")
-                .match(/.{1,46}/g)
-                .map((i) => i.match(/.{1,40}/g))
-                .flat(1)
-                .map((curr3) =>
-                  curr3.length == 40
-                    ? "0x" + curr3.toUpperCase()
-                    : BigInt(parseInt("0x" + curr3))
-                )
+            ? uniswapV3PathDecode(curr2)
             : curr2
         )
       : uniswapDecodedInputArray(txnData)[i]
@@ -115,6 +117,7 @@ module.exports = {
   uniswapCommandArray: uniswapCommandArray,
   uniswapInputArray: uniswapInputArray,
   uniswapDecodedInputArray: uniswapDecodedInputArray,
+  uniswapV3PathDecode: uniswapV3PathDecode,
   uniswapV3DecodedInputArray: uniswapV3DecodedInputArray,
   uniswapDeadline: uniswapDeadline,
   uniswapFullDecodedInput: uniswapFullDecodedInput,

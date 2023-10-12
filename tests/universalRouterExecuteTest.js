@@ -7,6 +7,7 @@ const {
   uniswapCommandArray,
   uniswapInputArray,
   uniswapDecodedInputArray,
+  uniswapV3PathDecode,
   uniswapV3DecodedInputArray,
   uniswapDeadline,
   uniswapFullDecodedInput,
@@ -77,7 +78,21 @@ describe("Getting Deadline", () => {
 });
 
 describe("Getting V3 Transaction data", () => {
-  it("should correctly translate V3 path bytes to address", () => {
+  it("should correctly translate hex bytes to V3 path", () => {
+    const testFile = JSON.parse(
+      fs.readFileSync("tests/0x0b010c.json", "utf-8")
+    );
+    let decodedV3InputArray = uniswapV3PathDecode("0x4d224452801aced8b2f0aebe155379bb5d594381000bb8c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2");
+    console.log(uniswapDecodedInputArray(testFile.input));
+    console.log("Actual V3 Array:", decodedV3InputArray);
+    expect(decodedV3InputArray).to.eql(
+        [
+          "0x4D224452801ACED8B2F0AEBE155379BB5D594381",
+          3000n,
+          "0xC02AAA39B223FE8D0A0E5C4F27EAD9083C756CC2",
+        ]);
+  });
+  it("should correctly translate uniswap V3 path bytes to address in array", () => {
     const testFile = JSON.parse(
       fs.readFileSync("tests/0x0b010c.json", "utf-8")
     );
