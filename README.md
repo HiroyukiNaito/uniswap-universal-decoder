@@ -1,6 +1,6 @@
 ![Ethereum](https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=Ethereum&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![License: MIT](https://img.shields.io/github/license/Ileriayo/markdown-badges?style=for-the-badge)
 
 ## Uniswap universal execute decoder
 Decodes Uniswap Universal execute function in accordance with [the Uniswap tehchnical reference](https://docs.uniswap.org/contracts/universal-router/technical-reference#command-inputs) in which translate binary into array.
