@@ -71,7 +71,7 @@ const {
 } = require("./universalDecoder");
 ```
 
-####  uniswapCommands function
+####  hasUniswapCommands function
 
 Check whether it has Uiversal Router Commands
 
