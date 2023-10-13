@@ -118,15 +118,15 @@ console.log(uniswapDecodedInputArray(txnData));
 ```
 - Expected Result Example
 ```javascript
-[
-      "0x0000000000000000000000000000000000000001",
-      7500000000000000n,
-      58878075174672152174894551n,
-      [
-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "0x02e7F808990638E9e67E1f00313037EDe2362361",
-      ],
-      false,
+ [
+  '0x0000000000000000000000000000000000000001',
+  7500000000000000n,
+  58878075174672152174894551n,
+  [
+    '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+    '0x02e7f808990638e9e67e1f00313037ede2362361'
+  ],
+  false
 ]
 ```
 
@@ -139,20 +139,20 @@ console.log(uniswapV3DecodedInputArray(txnData));
 ```
 - Expected Result Example
 ```javascript
-[
-      ["0x0000000000000000000000000000000000000002", 34564726617685178n],
-      [
-        "0x0000000000000000000000000000000000000001",
-        10000000000000000000n,
-        34564726617685178n,
-        [
-          "0x4D224452801ACED8B2F0AEBE155379BB5D594381",  <=== Uniswap Path Address
-          3000n, <=== Pool Fee
-          "0xC02AAA39B223FE8D0A0E5C4F27EAD9083C756CC2",  <=== Pool Address
-        ],
-        false,
-      ],
-      ["0x0000000000000000000000000000000000000001", 0n],
+ [
+  [ '0x0000000000000000000000000000000000000002', 34564726617685178n ],
+  [
+    '0x0000000000000000000000000000000000000001',
+    10000000000000000000n,
+    34564726617685178n,
+    [
+      '0x4d224452801aced8b2f0aebe155379bb5d594381', <-- Path Address
+      3000n,                                        <-- Pool Address
+      '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'  <-- Path Address
+    ],
+    false
+  ],
+  [ '0x0000000000000000000000000000000000000001', 0n ]
 ]
 ```
 
@@ -183,46 +183,61 @@ Please see [the reference](https://docs.uniswap.org/contracts/universal-router/t
   
 ```javascript
 {
-        contents: [
+  contents: [
+    [
+      {
+        command: '0b',
+        value: 'WRAP_ETH',
+        inputType: [ 'address', 'uint256' ],
+        decodedInput: [
+          '0x0000000000000000000000000000000000000002',
+          5000000000000000n
+        ]
+      }
+    ],
+    [
+      {
+        command: '08',
+        value: 'V2_SWAP_EXACT_IN',
+        inputType: [ 'address', 'uint256', 'uint256', 'address[]', 'bool' ],
+        decodedInput: [
+          '0x0000000000000000000000000000000000000002',
+          5000000000000000n,
+          11281527462407831653458207n,
           [
-            {
-              command: '0b',
-              value: 'WRAP_ETH',
-              inputType: [ 'address', 'uint256' ],
-              decodedInput: [
-                '0x0000000000000000000000000000000000000002',
-                34564726617685178n
-              ]
-            }
+            '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+            '0x6982508145454ce325ddbe47a25d4ec3d2311933'
           ],
-          [
-            {
-              command: '01',
-              value: 'V3_SWAP_EXACT_OUT',
-              inputType: [ 'address', 'uint256', 'uint256', 'bytes', 'bool' ],
-              decodedInput: [
-                '0x0000000000000000000000000000000000000001',
-                10000000000000000000n,
-                34564726617685178n,
-                [
-                  '0x4D224452801ACED8B2F0AEBE155379BB5D594381',
-                  3000n,
-                  '0xC02AAA39B223FE8D0A0E5C4F27EAD9083C756CC2'
-                ],
-                false
-              ]
-            }
-          ],
-          [
-            {
-              command: '0c',
-              value: 'UNWRAP_WETH',
-              inputType: [ 'address', 'uint256' ],
-              decodedInput:  [ '0x0000000000000000000000000000000000000001', 0n ]
-            }
-          ]
-        ],
-        deadline: 1674344111n
+          false
+        ]
+      }
+    ],
+    [
+      {
+        command: '06',
+        value: 'PAY_PORTION',
+        inputType: [ 'address', 'address', 'uint256' ],
+        decodedInput: [
+          '0x6982508145454ce325ddbe47a25d4ec3d2311933',
+          '0x17cc6042605381c158d2adab487434bde79aa61c',
+          100n
+        ]
+      }
+    ],
+    [
+      {
+        command: '04',
+        value: 'SWEEP',
+        inputType: [ 'address', 'address', 'uint256' ],
+        decodedInput: [
+          '0x6982508145454ce325ddbe47a25d4ec3d2311933',
+          '0x0000000000000000000000000000000000000001',
+          11281527462407831653458207n
+        ]
+      }
+    ]
+  ],
+  deadline: 1696581227n
 }
 ```
 
