@@ -286,7 +286,7 @@ const main = async () => {
     provider.on('pending', async (tx) => {
         const txnData = await provider.getTransaction(tx);
         txnData 
-          ? (txnData.to == router && hasUniswapCommands(txnData['data']))  // 0x3593564c => execute method
+          ? (txnData.to == router && hasUniswapCommands(txnData['data'])) 
                 ? compose(
                      console.log("uniswapCommands: ", util.inspect(uniswapCommands(txnData['data']), false, null, true )),
                      console.log("uniswapCommandArray: ", util.inspect(uniswapCommandArray(txnData['data']), false, null, true )),
