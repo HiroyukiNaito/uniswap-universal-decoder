@@ -10,6 +10,12 @@ const universalABI = JSON.parse(
 const universalInteface = new Interface(universalABI);
 const abiCoder = new AbiCoder();
 
+
+// Getting Uniswap commands
+// 0x3593564c => execute method
+const hasUniswapCommands = (txnData) =>
+  (txnData.includes("0x3593564c") && universalInteface.parseTransaction({ data: txnData })).args[0].length > 2 ? true : false;
+
 // Getting Uniswap commands
 const uniswapCommands = (txnData) =>
   universalInteface.parseTransaction({ data: txnData }).args[0].toLowerCase();
@@ -120,6 +126,7 @@ const uniswapFullDecodedInput = (txnData) => ({
 
 // Exporting functions
 module.exports = {
+  hasUniswapCommands: hasUniswapCommands,
   uniswapCommands: uniswapCommands,
   uniswapCommandArray: uniswapCommandArray,
   uniswapInputArray: uniswapInputArray,
