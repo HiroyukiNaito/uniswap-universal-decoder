@@ -11,8 +11,8 @@ const {
   uniswapFullDecodedInput,
 } = require("./universalDecoder");
 
-const wssUrl = "YOUR_RPC_WEBSOCKET_URL";
-// const wssUrl = "ws://localhost:8546";
+// const wssUrl = "YOUR_RPC_WEBSOCKET_URL";
+const wssUrl = "ws://localhost:8546";
 
 //Universal Router Contract Address
 const router = "0x3fC91A3afd70395Cd496C647d5a6CC9D4B2b7FAD";
@@ -23,7 +23,7 @@ const main = async () => {
     provider.on('pending', async (tx) => {
         const txnData = await provider.getTransaction(tx);
         txnData 
-          ? (txnData.to == router && hasUniswapCommands(txnData['data']))  // 0x3593564c => execute method
+          ? (txnData.to == router && hasUniswapCommands(txnData['data']))
                 ? compose(
                      console.log("uniswapCommands: ", util.inspect(uniswapCommands(txnData['data']), false, null, true )),
                      console.log("uniswapCommandArray: ", util.inspect(uniswapCommandArray(txnData['data']), false, null, true )),
