@@ -69,7 +69,7 @@ const uniswapDecodedInputArray = (txnData) =>
 
 // Getting Uniswap deadline
 const uniswapDeadline = (txnData) =>
-  universalInteface.parseTransaction({ data: txnData }).args.length == 3
+  universalInteface.parseTransaction({ data: txnData }).args.length === 3
     ? universalInteface.parseTransaction({ data: txnData }).args[2]
     : null;
 
@@ -82,7 +82,7 @@ const uniswapV3PathDecode = (hexPath) => hexPath
                                           .map((i) => i.match(/.{1,40}/g))
                                           .flat(1)
                                           .map((curr) =>
-                                                  curr.length == 40
+                                                  curr.length === 40
                                                   ? "0x" + curr.toUpperCase()
                                                   : BigInt(parseInt("0x" + curr))
                                            )
