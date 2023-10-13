@@ -60,7 +60,7 @@ const commandDictionary = {
     "1e": [],
     "1f": [],
 };
-// Decode with loswercase 
+// All elements to be lower case such as hex address expression
 const deepLowercase = (arr) =>
   arr.map((item) =>
     Array.isArray(item) ? deepLowercase(item) :
