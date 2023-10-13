@@ -14,7 +14,8 @@ const abiCoder = new AbiCoder();
 // Getting Uniswap commands
 // 0x3593564c => execute method
 const hasUniswapCommands = (txnData) =>
-  (txnData.includes("0x3593564c") && universalInteface.parseTransaction({ data: txnData })).args[0].length > 2 ? true : false;
+  txnData.includes("0x3593564c") ? (universalInteface.parseTransaction({ data: txnData }).args[0].length > 2 ? true : false)
+                                 : false
 
 // Getting Uniswap commands
 const uniswapCommands = (txnData) =>
