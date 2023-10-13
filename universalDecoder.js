@@ -12,7 +12,7 @@ const abiCoder = new AbiCoder();
 
 // Getting Uniswap commands
 const uniswapCommands = (txnData) =>
-  universalInteface.parseTransaction({ data: txnData }).args[0];
+  universalInteface.parseTransaction({ data: txnData }).args[0].toLowerCase();
 
 // Getting Uniswap command array
 const uniswapCommandArray = (txnData) =>
@@ -60,11 +60,18 @@ const commandDictionary = {
     "1e": [],
     "1f": [],
 };
+// Decode with loswercase 
+const deepLowercase = (arr) =>
+  arr.map((item) =>
+    Array.isArray(item) ? deepLowercase(item) :
+    typeof item === 'string' ? item.toLowerCase() :
+    item
+  );
 
 // Getting Uniswap Decoded Input
 const uniswapDecodedInputArray = (txnData) =>
   uniswapCommandArray(txnData).map((curr, i) =>
-    abiCoder.decode(commandDictionary[curr][1], uniswapInputArray(txnData)[i])
+    deepLowercase(abiCoder.decode(commandDictionary[curr][1], uniswapInputArray(txnData)[i]))
   );
 
 // Getting Uniswap deadline
@@ -83,7 +90,7 @@ const uniswapV3PathDecode = (hexPath) => hexPath
                                           .flat(1)
                                           .map((curr) =>
                                                   curr.length === 40
-                                                  ? "0x" + curr.toUpperCase()
+                                                  ? "0x" + curr
                                                   : BigInt(parseInt("0x" + curr))
                                            )
 
@@ -91,7 +98,7 @@ const uniswapV3DecodedInputArray = (txnData) =>
   uniswapCommandArray(txnData).map((curr, i) =>
     curr === "01" || curr === "00" // pick V3 for path format
       ? uniswapDecodedInputArray(txnData)[i].map((curr2, n) =>
-          n == 3
+          n === 3
             ? uniswapV3PathDecode(curr2)
             : curr2
         )

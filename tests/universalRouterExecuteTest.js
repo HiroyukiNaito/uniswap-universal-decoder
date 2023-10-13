@@ -59,8 +59,8 @@ describe("Getting Inputs Data", () => {
       7500000000000000n,
       58878075174672152174894551n,
       [
-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "0x02e7F808990638E9e67E1f00313037EDe2362361",
+        "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "0x02e7f808990638e9e67e1f00313037ede2362361",
       ],
       false,
     ]);
@@ -87,9 +87,9 @@ describe("Getting V3 Transaction data", () => {
     console.log("Actual V3 Array:", decodedV3InputArray);
     expect(decodedV3InputArray).to.eql(
         [
-          "0x4D224452801ACED8B2F0AEBE155379BB5D594381",
+          "0x4d224452801aced8b2f0aebe155379bb5d594381",
           3000n,
-          "0xC02AAA39B223FE8D0A0E5C4F27EAD9083C756CC2",
+          "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
         ]);
   });
   it("should correctly translate uniswap V3 path bytes to address in array", () => {
@@ -105,9 +105,9 @@ describe("Getting V3 Transaction data", () => {
         10000000000000000000n,
         34564726617685178n,
         [
-          "0x4D224452801ACED8B2F0AEBE155379BB5D594381",
+          "0x4d224452801aced8b2f0aebe155379bb5d594381",
           3000n,
-          "0xC02AAA39B223FE8D0A0E5C4F27EAD9083C756CC2",
+          "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
         ],
         false,
       ],
@@ -149,8 +149,8 @@ describe("Transaction processing", () => {
               7500000000000000n,
               58878075174672152174894551n,
               [
-                "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-                "0x02e7F808990638E9e67E1f00313037EDe2362361",
+                "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+                "0x02e7f808990638e9e67e1f00313037ede2362361",
               ],
               false,
             ],
@@ -192,8 +192,8 @@ describe("Transaction processing", () => {
               209511000000000n,
               29316395387909477n,
               [
-                "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-                "0x1E8E29CA51363D923725aB9DaC73Bd7e9C440f71",
+                "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+                "0x1e8e29ca51363d923725ab9dac73bd7e9c440f71",
               ],
               false,
             ],
@@ -244,9 +244,9 @@ describe("Transaction processing", () => {
               490040542184142600n,
               22563458791223110851455n,
               [
-                "0xC02AAA39B223FE8D0A0E5C4F27EAD9083C756CC2",
+                "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
                 10000n,
-                "0x00C83AECC790E8A4453E5DD3B0B4B3680501A7A7",
+                "0x00c83aecc790e8a4453e5dd3b0b4b3680501a7a7",
               ],
               false,
             ],
@@ -289,9 +289,9 @@ describe("Transaction processing", () => {
                 10000000000000000000n,
                 34564726617685178n,
                 [
-                  '0x4D224452801ACED8B2F0AEBE155379BB5D594381',
+                  '0x4d224452801aced8b2f0aebe155379bb5d594381',
                   3000n,
-                  '0xC02AAA39B223FE8D0A0E5C4F27EAD9083C756CC2'
+                  '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
                 ],
                 false
               ]
@@ -331,12 +331,12 @@ describe("Transaction processing", () => {
               decodedInput: [
                 [
                   [
-                    '0x3B960E47784150F5a63777201ee2B15253D713e8',
+                    '0x3b960e47784150f5a63777201ee2b15253d713e8',
                     1461501637330902918203684832716283019655932542975n,
                     1699172129n,
                     0n
                   ],
-                  '0x3fC91A3afd70395Cd496C647d5a6CC9D4B2b7FAD',
+                  '0x3fc91a3afd70395cd496c647d5a6cc9d4b2b7fad',
                   1696581929n
                 ],
                 '0x2a3fe6b6af8c46505658c48be8bebb4b22588d0d605cdf8ed22461bcc03adc1b480ee0b6deb7354889e702506dbf703c83b1aab3a8a9d774283727b6455721b51c'
@@ -353,11 +353,11 @@ describe("Transaction processing", () => {
                 14018556769268767n,
                 11001239826448700n,
                 [
-                  '0x3B960E47784150F5A63777201EE2B15253D713E8',
+                  '0x3b960e47784150f5a63777201ee2b15253d713e8',
                   500n,
-                  '0xA0B86991C6218B36C1D19D4A2E9EB0CE3606EB48',
+                  '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
                   500n,
-                  '0xC02AAA39B223FE8D0A0E5C4F27EAD9083C756CC2'
+                  '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
                 ],
                 true
               ]
@@ -411,8 +411,8 @@ describe("Transaction processing", () => {
                 5000000000000000n,
                 11281527462407831653458207n,
                 [
-                  '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
-                  '0x6982508145454Ce325dDbE47a25d4ec3d2311933'
+                  '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+                  '0x6982508145454ce325ddbe47a25d4ec3d2311933'
                 ],
                 false
               ]
@@ -424,8 +424,8 @@ describe("Transaction processing", () => {
               value: 'PAY_PORTION',
               inputType: [ 'address', 'address', 'uint256' ],
               decodedInput: [
-                '0x6982508145454Ce325dDbE47a25d4ec3d2311933',
-                '0x17CC6042605381c158D2adab487434Bde79Aa61C',
+                '0x6982508145454ce325ddbe47a25d4ec3d2311933',
+                '0x17cc6042605381c158d2adab487434bde79aa61c',
                 100n
               ]
             }
@@ -436,7 +436,7 @@ describe("Transaction processing", () => {
               value: 'SWEEP',
               inputType: [ 'address', 'address', 'uint256' ],
               decodedInput:  [
-                '0x6982508145454Ce325dDbE47a25d4ec3d2311933',
+                '0x6982508145454ce325ddbe47a25d4ec3d2311933',
                 '0x0000000000000000000000000000000000000001',
                 11281527462407831653458207n
               ]
