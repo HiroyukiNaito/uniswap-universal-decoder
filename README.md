@@ -20,6 +20,7 @@ Decodes Uniswap Universal execute function in accordance with [the Uniswap tehch
 
 | command | value | Decode | Tested
 | ---------- | ------------- |:------:|:------:
+| 0x   | N/A  | ✅ |  ✅
 | 0x00 | V3_SWAP_EXACT_IN | ✅ |  ✅
 | 0x01 | V3_SWAP_EXACT_OUT | ✅ |  ✅
 | 0x02 | PERMIT2_TRANSFER_FROM | ✅ | 
