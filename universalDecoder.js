@@ -127,13 +127,13 @@ const uniswapFullDecodedInput = (txnData) => ({
 
 // Exporting functions
 module.exports = {
-  hasUniswapCommands: hasUniswapCommands,
-  uniswapCommands: uniswapCommands,
-  uniswapCommandArray: uniswapCommandArray,
-  uniswapInputArray: uniswapInputArray,
-  uniswapDecodedInputArray: uniswapDecodedInputArray,
-  uniswapV3PathDecode: uniswapV3PathDecode,
-  uniswapV3DecodedInputArray: uniswapV3DecodedInputArray,
-  uniswapDeadline: uniswapDeadline,
-  uniswapFullDecodedInput: uniswapFullDecodedInput,
+  hasUniswapCommands,
+  uniswapCommands,
+  uniswapCommandArray,
+  uniswapInputArray,
+  uniswapDecodedInputArray,
+  uniswapV3PathDecode,
+  uniswapV3DecodedInputArray,
+  uniswapDeadline,
+  uniswapFullDecodedInput,
 };
