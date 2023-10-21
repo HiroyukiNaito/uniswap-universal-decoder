@@ -161,7 +161,7 @@ console.log(uniswapV3DecodedInputArray(txnData));
     34564726617685178n,
     [
       '0x4d224452801aced8b2f0aebe155379bb5d594381', <-- Path Address
-      3000n,                                        <-- Pool Address
+      3000n,                                        <-- Pool Fee
       '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'  <-- Path Address
     ],
     false
