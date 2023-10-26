@@ -21,9 +21,19 @@ describe("Checking Commands", () => {
   it("should not have uniswap commands", () => {
     expect(hasUniswapCommands(testFile.input)).to.false;
   });
-  const testFile2 = JSON.parse(fs.readFileSync("tests/0x0b08.json", "utf-8"));
+  const testFile2 = JSON.parse(fs.readFileSync("tests/noCommand2.json", "utf-8"));
+
+  it("should not have uniswap commands", () => {
+    expect(hasUniswapCommands(testFile2.input)).to.false;
+  });
+  const testFile3 = JSON.parse(fs.readFileSync("tests/noCommand3.json", "utf-8"));
+  
+  it("should not have uniswap commands", () => {
+    expect(hasUniswapCommands(testFile3.input)).to.false;
+  });
+  const testFile4 = JSON.parse(fs.readFileSync("tests/0x0b08.json", "utf-8"));
   it("should have uniswap commands", () => {
-    expect(hasUniswapCommands(testFile2.input)).to.true;
+    expect(hasUniswapCommands(testFile4.input)).to.true;
   });
 });
 

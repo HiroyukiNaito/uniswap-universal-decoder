@@ -21,7 +21,8 @@ const hasUniswapCommands = (txnData) => {
                                                 ? true : false)
                                  : false
  } catch (error) {
-   console.log("Illegal format Data:", txnData, error);
+   console.log("Illegal format Data =>", txnData);
+   console.log("Error contents =>", error);
    return false
  }                               
 }
