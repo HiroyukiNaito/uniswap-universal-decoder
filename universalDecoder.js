@@ -13,10 +13,18 @@ const abiCoder = new AbiCoder();
 
 // Getting Uniswap commands
 // 0x3593564c => execute method
-const hasUniswapCommands = (txnData) =>
-  txnData.includes("0x3593564c") ? (universalInteface.parseTransaction({ data: txnData }).args[0].length > 2 ? true : false)
+const hasUniswapCommands = (txnData) => {
+ try {
+   return txnData.includes("0x3593564c")
+                                 ? (universalInteface.parseTransaction({ data: txnData }).args.length > 2 
+                                         && universalInteface.parseTransaction({ data: txnData }).args[0].length > 2
+                                                ? true : false)
                                  : false
-
+ } catch (error) {
+   console.log("Illegal format Data:", txnData, error);
+   return false
+ }                               
+}
 // Getting Uniswap commands
 const uniswapCommands = (txnData) =>
   universalInteface.parseTransaction({ data: txnData }).args[0].toLowerCase();
