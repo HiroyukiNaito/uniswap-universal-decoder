@@ -16,10 +16,12 @@ const abiCoder = new AbiCoder();
 const hasUniswapCommands = (txnData) => {
  try {
    return txnData.includes("0x3593564c")
-                                 ? (universalInteface.parseTransaction({ data: txnData }).args.length > 2 
-                                         && universalInteface.parseTransaction({ data: txnData }).args[0].length > 2
-                                                ? true : false)
-                                 : false
+            ? (universalInteface.parseTransaction({ data: txnData }).args.length >= 2 && universalInteface.parseTransaction({ data: txnData }).args.length <= 3) 
+                   ? (universalInteface.parseTransaction({ data: txnData }).args[0].length > 2)
+                          ? true 
+                          : false
+                   : false 
+            : false
  } catch (error) {
    console.log("Illegal format Data =>", txnData);
    console.log("Error contents =>", error);
