@@ -7,7 +7,7 @@ const { Interface, AbiCoder } = require("ethers");
 const universalABI = JSON.parse(
   fs.readFileSync(path.resolve(__dirname, "./UniversalRouterAbi.json"), "utf-8")
 );
-const universalInteface = new Interface(universalABI);
+const universalInterface = new Interface(universalABI);
 const abiCoder = new AbiCoder();
 
 
@@ -16,8 +16,8 @@ const abiCoder = new AbiCoder();
 const hasUniswapCommands = (txnData) => {
  try {
    return txnData.includes("0x3593564c")
-            ? (universalInteface.parseTransaction({ data: txnData }).args.length >= 2 && universalInteface.parseTransaction({ data: txnData }).args.length <= 3) 
-                   ? (universalInteface.parseTransaction({ data: txnData }).args[0].length > 2)
+            ? (universalInterface.parseTransaction({ data: txnData }).args.length >= 2 && universalInterface.parseTransaction({ data: txnData }).args.length <= 3) 
+                   ? (universalInterface.parseTransaction({ data: txnData }).args[0].length > 2)
                           ? true 
                           : false
                    : false 
@@ -30,7 +30,7 @@ const hasUniswapCommands = (txnData) => {
 }
 // Getting Uniswap commands
 const uniswapCommands = (txnData) =>
-  universalInteface.parseTransaction({ data: txnData }).args[0].toLowerCase();
+  universalInterface.parseTransaction({ data: txnData }).args[0].toLowerCase();
 
 // Getting Uniswap command array
 const uniswapCommandArray = (txnData) =>
@@ -40,7 +40,7 @@ const uniswapCommandArray = (txnData) =>
 
 // Getting Uniswap InputArray
 const uniswapInputArray = (txnData) =>
-  universalInteface.parseTransaction({ data: txnData }).args[1];
+  universalInterface.parseTransaction({ data: txnData }).args[1];
 
 // Uniswap Router command dictionary
 // https://docs.uniswap.org/contracts/universal-router/technical-reference
@@ -94,8 +94,8 @@ const uniswapDecodedInputArray = (txnData) =>
 
 // Getting Uniswap deadline
 const uniswapDeadline = (txnData) =>
-  universalInteface.parseTransaction({ data: txnData }).args.length === 3
-    ? universalInteface.parseTransaction({ data: txnData }).args[2]
+  universalInterface.parseTransaction({ data: txnData }).args.length === 3
+    ? universalInterface.parseTransaction({ data: txnData }).args[2]
     : null;
 
 // Getting Uniswap V3 Path Decoded Input
