@@ -64,8 +64,8 @@ NOTE: Uniswap Universal Router uses address constants internally, for example
 export const MSG_SENDER: string = '0x0000000000000000000000000000000000000001'
 export const ADDRESS_THIS: string = '0x0000000000000000000000000000000000000002'
 ```
-- '0x0000000000000000000000000000000000000001' is msg.sender (EOA) address itself
-- '0x0000000000000000000000000000000000000002' is Universal Router Contract address itself 
+- '0x0000000000000000000000000000000000000001' represents msg.sender (EOA) address itself
+- '0x0000000000000000000000000000000000000002' represents Universal Router Contract address itself 
 
 ### Usage
 
