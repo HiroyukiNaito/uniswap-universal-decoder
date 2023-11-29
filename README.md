@@ -56,13 +56,19 @@ Decodes Uniswap Universal execute function in accordance with [the Uniswap tehch
 
 ---
 
-### [Address Constants](https://github.com/Uniswap/universal-router/blob/7d763cb28c88bb3bce5a30ad2356722f10c4d484/test/integration-tests/shared/constants.ts#L14)
+### [Address Constants](https://etherscan.io/address/0x3fC91A3afd70395Cd496C647d5a6CC9D4B2b7FAD#code#F26#L17)
 
 NOTE: Uniswap Universal Router uses address constants internally, for example
 
-```Javascript
-export const MSG_SENDER: string = '0x0000000000000000000000000000000000000001'
-export const ADDRESS_THIS: string = '0x0000000000000000000000000000000000000002'
+```solidity
+    /// @dev Used as a flag for identifying the transfer of ETH instead of a token
+    address internal constant ETH = address(0);
+
+    /// @dev Used as a flag for identifying that msg.sender should be used, saves gas by sending more 0 bytes
+    address internal constant MSG_SENDER = address(1);
+
+    /// @dev Used as a flag for identifying address(this) should be used, saves gas by sending more 0 bytes
+    address internal constant ADDRESS_THIS = address(2);
 ```
 - '0x0000000000000000000000000000000000000001' represents msg.sender (EOA) address itself
 - '0x0000000000000000000000000000000000000002' represents Universal Router Contract address itself 
