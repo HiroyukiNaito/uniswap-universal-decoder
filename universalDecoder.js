@@ -132,7 +132,7 @@ const uniswapFullDecodedInput = (txnData) => ({
       inputType: commandDictionary[curr][1],
       decodedInput: uniswapV3DecodedInputArray(txnData)[i],
     },
-  ]),
+  ]).flat(1),
   deadline: uniswapDeadline(txnData),
 });
 

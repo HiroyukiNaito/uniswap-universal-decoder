@@ -148,36 +148,32 @@ describe("Transaction processing", () => {
     );
     expect(fullDecodedInput).to.eql({
       contents: [
-        [
-          {
-            command: "0b",
-            value: "WRAP_ETH",
-            inputType: ["address", "uint256"],
-            decodedInput: [
-              "0x0000000000000000000000000000000000000002",
-              7500000000000000n,
+        {
+          command: '0b',
+          value: 'WRAP_ETH',
+          inputType: [ 'address', 'uint256' ],
+          decodedInput: [
+            '0x0000000000000000000000000000000000000002',
+            7500000000000000n
+          ]
+        },
+        {
+          command: '08',
+          value: 'V2_SWAP_EXACT_IN',
+          inputType: [ 'address', 'uint256', 'uint256', 'address[]', 'bool' ],
+          decodedInput: [
+            '0x0000000000000000000000000000000000000001',
+            7500000000000000n,
+            58878075174672152174894551n,
+            [
+              '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+              '0x02e7f808990638e9e67e1f00313037ede2362361'
             ],
-          },
-        ],
-        [
-          {
-            command: "08",
-            value: "V2_SWAP_EXACT_IN",
-            inputType: ["address", "uint256", "uint256", "address[]", "bool"],
-            decodedInput: [
-              "0x0000000000000000000000000000000000000001",
-              7500000000000000n,
-              58878075174672152174894551n,
-              [
-                "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-                "0x02e7f808990638e9e67e1f00313037ede2362361",
-              ],
-              false,
-            ],
-          },
-        ],
+            false
+          ]
+        }
       ],
-      deadline: 1674344111n,
+      deadline: 1674344111n
     });
   });
 
@@ -191,44 +187,38 @@ describe("Transaction processing", () => {
     );
     expect(fullDecodedInput).to.eql({
       contents: [
-        [
-          {
-            command: "0b",
-            value: "WRAP_ETH",
-            inputType: ["address", "uint256"],
-            decodedInput: [
-              "0x0000000000000000000000000000000000000002",
-              29316395387909477n,
+        {
+          command: '0b',
+          value: 'WRAP_ETH',
+          inputType: [ 'address', 'uint256' ],
+          decodedInput: [
+            '0x0000000000000000000000000000000000000002',
+            29316395387909477n
+          ]
+        },
+        {
+          command: '09',
+          value: 'V2_SWAP_EXACT_OUT',
+          inputType: [ 'address', 'uint256', 'uint256', 'address[]', 'bool' ],
+          decodedInput: [
+            '0x0000000000000000000000000000000000000001',
+            209511000000000n,
+            29316395387909477n,
+            [
+              '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+              '0x1e8e29ca51363d923725ab9dac73bd7e9c440f71'
             ],
-          },
-        ],
-        [
-          {
-            command: "09",
-            value: "V2_SWAP_EXACT_OUT",
-            inputType: ["address", "uint256", "uint256", "address[]", "bool"],
-            decodedInput: [
-              "0x0000000000000000000000000000000000000001",
-              209511000000000n,
-              29316395387909477n,
-              [
-                "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-                "0x1e8e29ca51363d923725ab9dac73bd7e9c440f71",
-              ],
-              false,
-            ],
-          },
-        ],
-        [
-          {
-            command: "0c",
-            value: "UNWRAP_WETH",
-            inputType: ["address", "uint256"],
-            decodedInput: ["0x0000000000000000000000000000000000000001", 0n],
-          },
-        ],
+            false
+          ]
+        },
+        {
+          command: '0c',
+          value: 'UNWRAP_WETH',
+          inputType: [ 'address', 'uint256' ],
+          decodedInput: [ '0x0000000000000000000000000000000000000001', 0n ]
+        }
       ],
-      deadline: 1674170879n,
+      deadline: 1674170879n
     });
   });
 
@@ -241,37 +231,33 @@ describe("Transaction processing", () => {
     );
     expect(fullDecodedInput).to.eql({
       contents: [
-        [
-          {
-            command: "0b",
-            value: "WRAP_ETH",
-            inputType: ["address", "uint256"],
-            decodedInput: [
-              "0x0000000000000000000000000000000000000002",
-              490040542184142600n,
+        {
+          command: '0b',
+          value: 'WRAP_ETH',
+          inputType: [ 'address', 'uint256' ],
+          decodedInput: [
+            '0x0000000000000000000000000000000000000002',
+            490040542184142600n
+          ]
+        },
+        {
+          command: '00',
+          value: 'V3_SWAP_EXACT_IN',
+          inputType: [ 'address', 'uint256', 'uint256', 'bytes', 'bool' ],
+          decodedInput: [
+            '0x0000000000000000000000000000000000000001',
+            490040542184142600n,
+            22563458791223110851455n,
+            [
+              '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+              10000n,
+              '0x00c83aecc790e8a4453e5dd3b0b4b3680501a7a7'
             ],
-          },
-        ],
-        [
-          {
-            command: "00",
-            value: "V3_SWAP_EXACT_IN",
-            inputType: ["address", "uint256", "uint256", "bytes", "bool"],
-            decodedInput: [
-              "0x0000000000000000000000000000000000000001",
-              490040542184142600n,
-              22563458791223110851455n,
-              [
-                "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-                10000n,
-                "0x00c83aecc790e8a4453e5dd3b0b4b3680501a7a7",
-              ],
-              false,
-            ],
-          },
-        ],
+            false
+          ]
+        }
       ],
-      deadline: 1674377291n,
+      deadline: 1674377291n
     });
   });
 
@@ -286,45 +272,39 @@ describe("Transaction processing", () => {
     );
     expect(fullDecodedInput).to.eql({
       contents: [
-        [
-          {
-            command: "0b",
-            value: "WRAP_ETH",
-            inputType: ["address", "uint256"],
-            decodedInput: [
-              "0x0000000000000000000000000000000000000002",
-              34564726617685178n,
+        {
+          command: '0b',
+          value: 'WRAP_ETH',
+          inputType: [ 'address', 'uint256' ],
+          decodedInput: [
+            '0x0000000000000000000000000000000000000002',
+            34564726617685178n
+          ]
+        },
+        {
+          command: '01',
+          value: 'V3_SWAP_EXACT_OUT',
+          inputType: [ 'address', 'uint256', 'uint256', 'bytes', 'bool' ],
+          decodedInput: [
+            '0x0000000000000000000000000000000000000001',
+            10000000000000000000n,
+            34564726617685178n,
+            [
+              '0x4d224452801aced8b2f0aebe155379bb5d594381',
+              3000n,
+              '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
             ],
-          },
-        ],
-        [
-          {
-            command: "01",
-            value: "V3_SWAP_EXACT_OUT",
-            inputType: ["address", "uint256", "uint256", "bytes", "bool"],
-            decodedInput: [
-              "0x0000000000000000000000000000000000000001",
-              10000000000000000000n,
-              34564726617685178n,
-              [
-                "0x4d224452801aced8b2f0aebe155379bb5d594381",
-                3000n,
-                "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-              ],
-              false,
-            ],
-          },
-        ],
-        [
-          {
-            command: "0c",
-            value: "UNWRAP_WETH",
-            inputType: ["address", "uint256"],
-            decodedInput: ["0x0000000000000000000000000000000000000001", 0n],
-          },
-        ],
+            false
+          ]
+        },
+        {
+          command: '0c',
+          value: 'UNWRAP_WETH',
+          inputType: [ 'address', 'uint256' ],
+          decodedInput: [ '0x0000000000000000000000000000000000000001', 0n ]
+        }
       ],
-      deadline: 1674344111n,
+      deadline: 1674344111n
     });
   });
   it("should correctly identify and decode a permit2 permit transaction from execute", () => {
@@ -338,62 +318,56 @@ describe("Transaction processing", () => {
     );
     expect(fullDecodedInput).to.eql({
       contents: [
-        [
-          {
-            command: "0a",
-            value: "PERMIT2_PERMIT",
-            inputType: [
-              "tuple((address,uint160,uint48,uint48),address,uint256)",
-              "bytes",
-            ],
-            decodedInput: [
+        {
+          command: '0a',
+          value: 'PERMIT2_PERMIT',
+          inputType: [
+            'tuple((address,uint160,uint48,uint48),address,uint256)',
+            'bytes'
+          ],
+          decodedInput: [
+            [
               [
-                [
-                  "0x3b960e47784150f5a63777201ee2b15253d713e8",
-                  1461501637330902918203684832716283019655932542975n,
-                  1699172129n,
-                  0n,
-                ],
-                "0x3fc91a3afd70395cd496c647d5a6cc9d4b2b7fad",
-                1696581929n,
+                '0x3b960e47784150f5a63777201ee2b15253d713e8',
+                1461501637330902918203684832716283019655932542975n,
+                1699172129n,
+                0n
               ],
-              "0x2a3fe6b6af8c46505658c48be8bebb4b22588d0d605cdf8ed22461bcc03adc1b480ee0b6deb7354889e702506dbf703c83b1aab3a8a9d774283727b6455721b51c",
+              '0x3fc91a3afd70395cd496c647d5a6cc9d4b2b7fad',
+              1696581929n
             ],
-          },
-        ],
-        [
-          {
-            command: "00",
-            value: "V3_SWAP_EXACT_IN",
-            inputType: ["address", "uint256", "uint256", "bytes", "bool"],
-            decodedInput: [
-              "0x0000000000000000000000000000000000000002",
-              14018556769268767n,
-              11001239826448700n,
-              [
-                "0x3b960e47784150f5a63777201ee2b15253d713e8",
-                500n,
-                "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
-                500n,
-                "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-              ],
-              true,
+            '0x2a3fe6b6af8c46505658c48be8bebb4b22588d0d605cdf8ed22461bcc03adc1b480ee0b6deb7354889e702506dbf703c83b1aab3a8a9d774283727b6455721b51c'
+          ]
+        },
+        {
+          command: '00',
+          value: 'V3_SWAP_EXACT_IN',
+          inputType: [ 'address', 'uint256', 'uint256', 'bytes', 'bool' ],
+          decodedInput: [
+            '0x0000000000000000000000000000000000000002',
+            14018556769268767n,
+            11001239826448700n,
+            [
+              '0x3b960e47784150f5a63777201ee2b15253d713e8',
+              500n,
+              '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+              500n,
+              '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
             ],
-          },
-        ],
-        [
-          {
-            command: "0c",
-            value: "UNWRAP_WETH",
-            inputType: ["address", "uint256"],
-            decodedInput: [
-              "0x0000000000000000000000000000000000000001",
-              11001239826448700n,
-            ],
-          },
-        ],
+            true
+          ]
+        },
+        {
+          command: '0c',
+          value: 'UNWRAP_WETH',
+          inputType: [ 'address', 'uint256' ],
+          decodedInput: [
+            '0x0000000000000000000000000000000000000001',
+            11001239826448700n
+          ]
+        }
       ],
-      deadline: 1696581923n,
+      deadline: 1696581923n
     });
   });
 
@@ -408,60 +382,52 @@ describe("Transaction processing", () => {
     );
     expect(fullDecodedInput).to.eql({
       contents: [
-        [
-          {
-            command: "0b",
-            value: "WRAP_ETH",
-            inputType: ["address", "uint256"],
-            decodedInput: [
-              "0x0000000000000000000000000000000000000002",
-              5000000000000000n,
+        {
+          command: '0b',
+          value: 'WRAP_ETH',
+          inputType: [ 'address', 'uint256' ],
+          decodedInput: [
+            '0x0000000000000000000000000000000000000002',
+            5000000000000000n
+          ]
+        },
+        {
+          command: '08',
+          value: 'V2_SWAP_EXACT_IN',
+          inputType: [ 'address', 'uint256', 'uint256', 'address[]', 'bool' ],
+          decodedInput: [
+            '0x0000000000000000000000000000000000000002',
+            5000000000000000n,
+            11281527462407831653458207n,
+            [
+              '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+              '0x6982508145454ce325ddbe47a25d4ec3d2311933'
             ],
-          },
-        ],
-        [
-          {
-            command: "08",
-            value: "V2_SWAP_EXACT_IN",
-            inputType: ["address", "uint256", "uint256", "address[]", "bool"],
-            decodedInput: [
-              "0x0000000000000000000000000000000000000002",
-              5000000000000000n,
-              11281527462407831653458207n,
-              [
-                "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-                "0x6982508145454ce325ddbe47a25d4ec3d2311933",
-              ],
-              false,
-            ],
-          },
-        ],
-        [
-          {
-            command: "06",
-            value: "PAY_PORTION",
-            inputType: ["address", "address", "uint256"],
-            decodedInput: [
-              "0x6982508145454ce325ddbe47a25d4ec3d2311933",
-              "0x17cc6042605381c158d2adab487434bde79aa61c",
-              100n,
-            ],
-          },
-        ],
-        [
-          {
-            command: "04",
-            value: "SWEEP",
-            inputType: ["address", "address", "uint256"],
-            decodedInput: [
-              "0x6982508145454ce325ddbe47a25d4ec3d2311933",
-              "0x0000000000000000000000000000000000000001",
-              11281527462407831653458207n,
-            ],
-          },
-        ],
+            false
+          ]
+        },
+        {
+          command: '06',
+          value: 'PAY_PORTION',
+          inputType: [ 'address', 'address', 'uint256' ],
+          decodedInput: [
+            '0x6982508145454ce325ddbe47a25d4ec3d2311933',
+            '0x17cc6042605381c158d2adab487434bde79aa61c',
+            100n
+          ]
+        },
+        {
+          command: '04',
+          value: 'SWEEP',
+          inputType: [ 'address', 'address', 'uint256' ],
+          decodedInput: [
+            '0x6982508145454ce325ddbe47a25d4ec3d2311933',
+            '0x0000000000000000000000000000000000000001',
+            11281527462407831653458207n
+          ]
+        }
       ],
-      deadline: 1696581227n,
+      deadline: 1696581227n
     });
   });
 });
