@@ -31,7 +31,7 @@ Decodes Uniswap Universal execute function in accordance with [the Uniswap tehch
 | 0x07 | N/A | N/A | N/A
 | 0x08 | V2_SWAP_EXACT_IN | ✅ |  ✅
 | 0x09 | V2_SWAP_EXACT_OUT | ✅ |  ✅
-| 0x0a | PERMIT2_PERMIT | ✅ |  ✅
+| 0x0a | [PERMIT2_PERMIT](https://docs.uniswap.org/contracts/permit2/reference/allowance-transfer) | ✅ |  ✅
 | 0x0b | WRAP_ETH | ✅ |  ✅
 | 0x0c | UNWRAP_WETH | ✅ |   ✅
 | 0x0d | PERMIT2_TRANSFER_FROM_BATCH | ✅ | 
