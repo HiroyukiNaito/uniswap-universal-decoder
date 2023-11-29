@@ -430,4 +430,77 @@ describe("Transaction processing", () => {
       deadline: 1696581227n
     });
   });
+
+  it("should correctly identify and decode a transfer transaction from execute", () => {
+    const testFile = JSON.parse(
+      fs.readFileSync("tests/0x0a01050c.json", "utf-8")
+    );
+
+    let fullDecodedInput = uniswapFullDecodedInput(testFile.input);
+    console.log(
+      util.inspect(fullDecodedInput, false, null, true /* enable colors */)
+    );
+    expect(fullDecodedInput).to.eql({
+      contents: [
+        {
+          command: '0a',
+          value: 'PERMIT2_PERMIT',
+          inputType: [
+            'tuple((address,uint160,uint48,uint48),address,uint256)',
+            'bytes'
+          ],
+          decodedInput: [
+            [
+              [
+                '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+                1461501637330902918203684832716283019655932542975n,
+                1703502841n,
+                0n
+              ],
+              '0x3fc91a3afd70395cd496c647d5a6cc9d4b2b7fad',
+              1700912641n
+            ],
+            '0x5f0511ba3fa712da37ec36ee9a253b62a633045c94307f1199fbbfbe5208e64e631a4964e505db3f74227bab7d03166084939b2e38ec7a312983cccee3a06fdf1c'
+          ]
+        },
+        {
+          command: '01',
+          value: 'V3_SWAP_EXACT_OUT',
+          inputType: [ 'address', 'uint256', 'uint256', 'bytes', 'bool' ],
+          decodedInput: [
+            '0x0000000000000000000000000000000000000002',
+            2003000000000000000n,
+            4185711450n,
+            [
+              '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+              500n,
+              '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+            ],
+            true
+          ]
+        },
+        {
+          command: '05',
+          value: 'TRANSFER',
+          inputType: [ 'address', 'address', 'uint256' ],
+          decodedInput: [
+            '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+            '0x37a8f295612602f2774d331e562be9e61b83a327',
+            3000000000000000n
+          ]
+        },
+        {
+          command: '0c',
+          value: 'UNWRAP_WETH',
+          inputType: [ 'address', 'uint256' ],
+          decodedInput: [
+            '0x0000000000000000000000000000000000000001',
+            2000000000000000000n
+          ]
+        }
+      ],
+      deadline: 1700911439n
+    });
+  });
+
 });
