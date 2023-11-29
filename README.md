@@ -56,6 +56,17 @@ Decodes Uniswap Universal execute function in accordance with [the Uniswap tehch
 
 ---
 
+### [Address Constants](https://github.com/Uniswap/universal-router/blob/7d763cb28c88bb3bce5a30ad2356722f10c4d484/test/integration-tests/shared/constants.ts#L14)
+
+NOTE: Uniswap Universal Router uses address constants internally, for example
+
+```Javascript
+export const MSG_SENDER: string = '0x0000000000000000000000000000000000000001'
+export const ADDRESS_THIS: string = '0x0000000000000000000000000000000000000002'
+```
+- '0x0000000000000000000000000000000000000001' is msg.sender (EOA) address itself
+- '0x0000000000000000000000000000000000000002' is Universal Router Contract address itself 
+
 ### Usage
 
 #### Importing module
@@ -198,60 +209,64 @@ Please see [the reference](https://docs.uniswap.org/contracts/universal-router/t
 ```javascript
 {
   contents: [
-    [
-      {
-        command: '0b',
-        value: 'WRAP_ETH',
-        inputType: [ 'address', 'uint256' ],
-        decodedInput: [
-          '0x0000000000000000000000000000000000000002',
-          5000000000000000n
-        ]
-      }
-    ],
-    [
-      {
-        command: '08',
-        value: 'V2_SWAP_EXACT_IN',
-        inputType: [ 'address', 'uint256', 'uint256', 'address[]', 'bool' ],
-        decodedInput: [
-          '0x0000000000000000000000000000000000000002',
-          5000000000000000n,
-          11281527462407831653458207n,
+    {
+      command: '0a',
+      value: 'PERMIT2_PERMIT',
+      inputType: [
+        'tuple((address,uint160,uint48,uint48),address,uint256)',
+        'bytes'
+      ],
+      decodedInput: [
+        [
           [
-            '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
-            '0x6982508145454ce325ddbe47a25d4ec3d2311933'
+            '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+            1461501637330902918203684832716283019655932542975n,
+            1703502841n,
+            0n
           ],
-          false
-        ]
-      }
-    ],
-    [
-      {
-        command: '06',
-        value: 'PAY_PORTION',
-        inputType: [ 'address', 'address', 'uint256' ],
-        decodedInput: [
-          '0x6982508145454ce325ddbe47a25d4ec3d2311933',
-          '0x17cc6042605381c158d2adab487434bde79aa61c',
-          100n
-        ]
-      }
-    ],
-    [
-      {
-        command: '04',
-        value: 'SWEEP',
-        inputType: [ 'address', 'address', 'uint256' ],
-        decodedInput: [
-          '0x6982508145454ce325ddbe47a25d4ec3d2311933',
-          '0x0000000000000000000000000000000000000001',
-          11281527462407831653458207n
-        ]
-      }
-    ]
+          '0x3fc91a3afd70395cd496c647d5a6cc9d4b2b7fad',
+          1700912641n
+        ],
+        '0x5f0511ba3fa712da37ec36ee9a253b62a633045c94307f1199fbbfbe5208e64e631a4964e505db3f74227bab7d03166084939b2e38ec7a312983cccee3a06fdf1c'
+      ]
+    },
+    {
+      command: '01',
+      value: 'V3_SWAP_EXACT_OUT',
+      inputType: [ 'address', 'uint256', 'uint256', 'bytes', 'bool' ],
+      decodedInput: [
+        '0x0000000000000000000000000000000000000002',
+        2003000000000000000n,
+        4185711450n,
+        [
+          '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+          500n,
+          '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+        ],
+        true
+      ]
+    },
+    {
+      command: '05',
+      value: 'TRANSFER',
+      inputType: [ 'address', 'address', 'uint256' ],
+      decodedInput: [
+        '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+        '0x37a8f295612602f2774d331e562be9e61b83a327',
+        3000000000000000n
+      ]
+    },
+    {
+      command: '0c',
+      value: 'UNWRAP_WETH',
+      inputType: [ 'address', 'uint256' ],
+      decodedInput: [
+        '0x0000000000000000000000000000000000000001',
+        2000000000000000000n
+      ]
+    }
   ],
-  deadline: 1696581227n
+  deadline: 1700911439n
 }
 ```
 
