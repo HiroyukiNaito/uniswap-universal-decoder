@@ -26,7 +26,7 @@ Decodes Uniswap Universal execute function in accordance with [the Uniswap tehch
 | 0x02 | PERMIT2_TRANSFER_FROM | ✅ | 
 | 0x03 | PERMIT2_PERMIT_BATCH | ✅ | 
 | 0x04 | SWEEP | ✅ |  ✅
-| 0x05 | TRANSFER | ✅ | 
+| 0x05 | TRANSFER | ✅ | ✅
 | 0x06 | PAY_PORTION | ✅ |  ✅
 | 0x07 | N/A | N/A | N/A
 | 0x08 | V2_SWAP_EXACT_IN | ✅ |  ✅
